@@ -12,7 +12,6 @@ import okhttp3.Response;
 public class ImageModel {
     public interface ImageLoadListener {
         void onImageLoadSuccess(Bitmap bitmap);
-
         void onImageLoadFailed();
     }
 
@@ -22,7 +21,6 @@ public class ImageModel {
             public void run() {
                 try {
                     OkHttpClient client = new OkHttpClient();
-
                     Request request = new Request.Builder()
                             .url(url)
                             .build();
