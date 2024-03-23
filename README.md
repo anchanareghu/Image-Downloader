@@ -12,16 +12,16 @@ This Android application allows users to easily download images from URLs and sa
 
 - **Download Manager Integration**: Saves downloaded images to the device's photos using the built-in Download Manager for easy access.
 
-## Requirements
-
-- Android device running Android 4.1 (Jelly Bean) or higher.
-
 ## Screenshots
-<img src="app/src/main/res/drawable/screenshot.png" width="200" />
+<img src="app/src/main/res/drawable/screenshot01.png" width="200" /> <img src="app/src/main/res/drawable/screenshot02.png" width="200" /> <img src="app/src/main/res/drawable/screenshot03.png" width="200" /> <img src="app/src/main/res/drawable/screenshot04.png" width="200" />
 
 ## Libraries Used
+**OkHttp**: Used for efficient HTTP requests and image downloading.
 
-- [OkHttp](https://square.github.io/okhttp/): Used for efficient HTTP requests and image downloading.
+```
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+```
+
   
 ## Threading
 
