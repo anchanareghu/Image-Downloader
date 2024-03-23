@@ -54,9 +54,13 @@ public class MainActivity extends Activity implements MainView, DownloadView {
 
     @Override
     public void showImage(Bitmap bitmap) {
-        progressBar.setVisibility(View.GONE);
-        imageView.setImageBitmap(bitmap);
-        downloadButton.setVisibility(View.VISIBLE);
+        runOnUiThread(new Runnable() {
+            public void run() {
+                progressBar.setVisibility(View.GONE);
+                imageView.setImageBitmap(bitmap);
+                downloadButton.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Override

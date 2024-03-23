@@ -12,6 +12,7 @@ import okhttp3.Response;
 public class ImageModel {
     public interface ImageLoadListener {
         void onImageLoadSuccess(Bitmap bitmap);
+
         void onImageLoadFailed();
     }
 
@@ -37,7 +38,6 @@ public class ImageModel {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    listener.onImageLoadFailed();
                 }
             }
         }).start();
