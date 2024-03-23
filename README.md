@@ -2,7 +2,7 @@
 
 ## Overview
 
-This Android application allows users to easily download images from URLs and save them to their device's photos using the phone's download manager. The app is built using the OkHttp library to efficiently fetch images from the specified URLs, and threads have been incorporated to manage concurrent downloads.
+This Android application allows users to easily download images from URLs and save them to their device's photos using the phone's download manager. The app is built using the **MVP (Model-View-Presenter) architecture**, incorporating the OkHttp library to efficiently fetch images from the specified URLs, and threads have been incorporated to manage concurrent downloads.
 
 ## Features
 
