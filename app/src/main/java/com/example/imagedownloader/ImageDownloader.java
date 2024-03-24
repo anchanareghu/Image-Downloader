@@ -9,7 +9,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class ImageModel {
+public class ImageDownloader {
     public interface ImageLoadListener {
         void onImageLoadSuccess(Bitmap bitmap);
         void onImageLoadFailed();

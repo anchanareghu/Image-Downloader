@@ -1,36 +1,54 @@
 package com.example.imagedownloader;
 
+import android.app.DownloadManager;
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Environment;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
 public class MainPresenter {
-    MainView mainView;
-    ImageModel imageModel;
+    ITalkToMainActivity talkToMainActivity;
+    ImageDownloader imageModel;
+    Context context;
 
-    public MainPresenter(MainView mainView, ImageModel imageModel) {
-        this.mainView = mainView;
-        this.imageModel = imageModel;
+    public MainPresenter(ITalkToMainActivity talkToMainActivity, Context context) {
+        this.talkToMainActivity = talkToMainActivity;
+        this.imageModel = new ImageDownloader();
+        this.context = context;
     }
 
     public void onSearchButtonClick(String url) {
         try {
             URL imageUrl = new URL(url);
-            imageModel.loadImageFromUrl(imageUrl, new ImageModel.ImageLoadListener() {
+            imageModel.loadImageFromUrl(imageUrl, new ImageDownloader.ImageLoadListener() {
                 @Override
                 public void onImageLoadSuccess(Bitmap bitmap) {
-                    mainView.showImage(bitmap);
+                    talkToMainActivity.showImage(bitmap);
                 }
 
                 @Override
                 public void onImageLoadFailed() {
-                    mainView.showImageLoadError();
+                    talkToMainActivity.showImageLoadError();
                 }
             });
         } catch (MalformedURLException e) {
             e.printStackTrace();
-            mainView.showImageLoadError();
+            talkToMainActivity.showImageLoadError();
         }
     }
+
+    public void onDownloadButtonClicked(String imageUrl) {
+        talkToMainActivity.showDownloadInProgress();
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(imageUrl));
+        DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE)
+                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "image.jpg");
+        downloadManager.enqueue(request);
+        talkToMainActivity.showDownloadCompleted();
+    }
 }
+

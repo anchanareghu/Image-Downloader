@@ -13,14 +13,13 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-public class MainActivity extends Activity implements MainView, DownloadView {
+public class MainActivity extends Activity implements ITalkToMainActivity {
     ProgressBar progressBar;
     Button downloadButton;
     ImageView imageView;
     ImageButton searchButton;
     EditText editText;
     MainPresenter mainPresenter;
-    DownloadPresenter downloadPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,8 +33,7 @@ public class MainActivity extends Activity implements MainView, DownloadView {
         progressBar.setVisibility(View.GONE);
         downloadButton = findViewById(R.id.download_button);
 
-        mainPresenter = new MainPresenter(this, new ImageModel());
-        downloadPresenter = new DownloadPresenter(this, this);
+        mainPresenter = new MainPresenter(this, this.getApplicationContext());
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,7 +45,7 @@ public class MainActivity extends Activity implements MainView, DownloadView {
         downloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                downloadPresenter.onDownloadButtonClicked(editText.getText().toString());
+                mainPresenter.onDownloadButtonClicked(editText.getText().toString());
             }
         });
     }
@@ -65,27 +63,23 @@ public class MainActivity extends Activity implements MainView, DownloadView {
 
     @Override
     public void showImageLoadError() {
-        runOnUiThread(new Runnable() {
-            public void run() {
-                Toast.makeText(MainActivity.this, "Failed to load image.", Toast.LENGTH_SHORT).show();
-            }
-        });
+        setToastMessage("Failed to load image.");
     }
 
     @Override
     public void showDownloadInProgress() {
-        runOnUiThread(new Runnable() {
-            public void run() {
-                Toast.makeText(MainActivity.this, "Image download started.", Toast.LENGTH_SHORT).show();
-            }
-        });
+        setToastMessage("Image download started.");
     }
 
     @Override
     public void showDownloadCompleted() {
+        setToastMessage("Image download complete.");
+    }
+
+    public void setToastMessage(String message) {
         runOnUiThread(new Runnable() {
             public void run() {
-                Toast.makeText(MainActivity.this, "Image download complete.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
             }
         });
     }
