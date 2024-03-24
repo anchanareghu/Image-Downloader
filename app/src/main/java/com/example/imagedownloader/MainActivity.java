@@ -33,7 +33,7 @@ public class MainActivity extends Activity implements ITalkToMainActivity {
         progressBar.setVisibility(View.GONE);
         downloadButton = findViewById(R.id.download_button);
 
-        mainPresenter = new MainPresenter(this, this.getApplicationContext());
+        mainPresenter = new MainPresenter(this, this);
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
